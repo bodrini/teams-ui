@@ -1,38 +1,28 @@
-# teams-ui
+# Teams-UI (Frontend) 🏒
 
-This template should help get you started developing with Vue 3 in Vite.
+A high-performance Single Page Application (SPA) built with the modern Vue ecosystem.
 
-## Recommended IDE Setup
+## ⚡️ Tech Stack
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+* **Framework:** [Vue 3](https://vuejs.org/) (Composition API, `<script setup>`)
+* **Build Tool:** [Vite](https://vitejs.dev/) (Hot Module Replacement)
+* **Language:** TypeScript (Strict typing)
+* **HTTP Client:** Axios
+* **Styling:** Scoped CSS
 
-## Recommended Browser Setup
+## 🔌 Architecture & Integration
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+This UI consumes the **Teams Service** backend.
 
-## Customize configuration
+* **API Endpoint:** Expects REST API at `http://localhost:3000/api/teams`.
+* **Entry Point:** Main logic and state management are currently centralized in `src/App.vue`.
+* **Data Flow:** Unidirectional data flow from Parent (`App.vue`) to Child Components.
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+## 🛠 Quick Start
 
-## Project Setup
-
-```sh
+```bash
+# 1. Install dependencies
 npm install
-```
 
-### Compile and Hot-Reload for Development
-
-```sh
+# 2. Run development server
 npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
