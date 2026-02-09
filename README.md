@@ -17,12 +17,3 @@ This UI consumes the **Teams Service** backend.
 * **API Endpoint:** Expects REST API at `http://localhost:3000/api/teams`.
 * **Entry Point:** Main logic and state management are currently centralized in `src/App.vue`.
 * **Data Flow:** Unidirectional data flow from Parent (`App.vue`) to Child Components.
-
-## 🛠 Quick Start
-
-```bash
-# 1. Install dependencies
-npm install
-
-# 2. Run development server
-npm run dev
