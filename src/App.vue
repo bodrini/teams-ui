@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import siteLogo from './assets/site-logo.png';
+import churchLogo from './assets/church.png';
 
 const teams = ref([]);
 const fetchTeams = async () => {
@@ -56,7 +57,7 @@ onMounted(() => {
 
 /* Стилизуем заголовок h1 */
 h1 {
-  color: #FF0000;     /* Зеленый цвет Vue.js */
+  color: #FA8072;     /* Зеленый цвет Vue.js */
   margin-bottom: 30px; /* Отступ снизу до таблицы */
 }
 
