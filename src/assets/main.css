@@ -1,19 +1,52 @@
+/* 1. Импорт базовых переменных (цвета, шрифты), если они тебе нужны */
 @import './base.css';
 
-/* Базовый сброс */
+/* 2. Настройка всей страницы (Body) */
 body {
+  /* Убираем стандартные отступы браузера */
   margin: 0;
   padding: 0;
+  
+  /* Гарантируем, что фон растянется минимум на всю высоту экрана */
   min-height: 100vh;
-  /* Убираем Flex и Grid, чтобы страница была обычной */
-  display: block; 
-  background-color: #f8fafc; /* Приятный светлый фон */
+
+  /* ИЗМЕНЕНО: Мы убрали display: flex и place-items: center. 
+     Теперь страница ведет себя предсказуемо и не сжимает контент в комок. */
+  display: block;
+
+  /* ДОБАВЛЕНО: Фон с эффектом "ночного льда" */
+  background-image: 
+    /* Затемняющий градиент: сверху темнее, снизу чуть прозрачнее */
+    linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.75)),
+    /* Ссылка на твое фото в папке assets. 
+       ВАЖНО: Проверь, чтобы имя файла совпадало! */
+    url('@/assets/ice-bg.png'); 
+
+  /* Настройки фона, чтобы он не "плыл" */
+  background-size: cover;       /* Заполнить весь экран */
+  background-position: center;  /* Центрировать картинку */
+  background-attachment: fixed; /* Зафиксировать фон при скролле */
+  
+  color: #f8fafc;
+  font-family: sans-serif;
 }
 
 #app {
-  /* Убираем колонки и центрирование из шаблона */
+
   max-width: none;
   margin: 0;
   padding: 0;
+
   display: block;
 }
+
+a {
+  text-decoration: none;
+  color: #3b82f6; 
+  transition: 0.3s ease;
+}
+
+a:hover {
+  filter: brightness(1.2);
+}
+

@@ -5,7 +5,7 @@ import siteLogo from '../assets/site-logo.png';
 <template>
   <header class="header">
     <img :src="siteLogo" alt="Logo" class="logo" />
-    <h1>Sports Manager</h1>
+    <h1>Isles Army Happiness Metric</h1>
   </header>
 </template>
 
@@ -18,8 +18,8 @@ import siteLogo from '../assets/site-logo.png';
 }
 
 .logo {
-  width: 80px;
-  height: 80px;
+  width: 170px;
+  height: 150px;
   margin-bottom: 15px;
 }
 
