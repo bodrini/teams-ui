@@ -12,8 +12,7 @@ export function useNhlStats() {
     error.value = '';
     
     try {
-      const baseUrl = import.meta.env.VITE_API_BASE_URL;
-      const response = await api.get(`${baseUrl}/api/teams/nhl-stats-sync`);
+      const response = await api.get(`/api/teams/nhl-stats-sync`);
 
       if (response.data && response.data.data) {
         stats.value = response.data.data;
