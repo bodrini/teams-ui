@@ -21,41 +21,67 @@ import AppHeader from '@/components/AppHeader.vue';
   font-family: var(--p-font-family), sans-serif;
   text-align: center;
   
-  /* РЕГУЛИРУЕМ ШИРИНУ ТУТ */
-  max-width: 800px; 
+  /* 1. ШИРИНА И ЦЕНТРОВКА */
+  max-width: 800px; /* Наш золотой стандарт */
   width: 95%;
-  margin: 4rem auto;
-  padding: 2.5rem;
+  margin: 4rem auto; /* 4rem сверху/снизу, auto центрирует по горизонтали */
+  padding: 2rem;
 
-  /* Дизайн карточки */
-  background: var(--p-surface-0);
-  border: 1px solid var(--p-surface-200);
-  border-radius: 24px;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.1);
+  /* 2. ЭФФЕКТ СТЕКЛА (Glassmorphism) */
+  /* Делаем фон белым, но прозрачным на 85% */
+  background: rgba(255, 255, 255, 0.85); 
   
-  /* Ледяной градиент */
-  background-image: 
-    radial-gradient(circle at 0% 0%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 100% 100%, rgba(147, 51, 234, 0.05) 0%, transparent 50%);
+  /* Размываем то, что находится ПОД карточкой */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px); /* Для поддержки Safari */
+
+  /* 3. ГРАНИЦЫ И ТЕНИ */
+  border-radius: 24px;
+  /* Светлая тонкая граница создает эффект кромки стекла */
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  
+  /* Глубокая, но мягкая тень, чтобы карточка "оторвалась" от льда */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  
+  /* Плавное появление */
+  animation: fadeIn 0.8s ease-out;
 }
 
+/* 4. НАВИГАЦИЯ ВНУТРИ КАРТОЧКИ */
 nav {
   margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--p-surface-200);
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
 nav a {
-  margin: 0 15px;
   text-decoration: none;
-  font-weight: bold;
-  color: var(--p-text-color);
-  opacity: 0.6;
+  font-weight: 700;
+  color: #1e293b; /* Темный текст для контраста */
+  padding: 8px 16px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
 }
 
+/* Красивая подсветка активной ссылки */
 nav a.router-link-active {
-  opacity: 1;
-  color: var(--p-primary-color);
-  border-bottom: 2px solid var(--p-primary-color);
+  background: var(--p-primary-color);
+  color: white;
+  box-shadow: 0 4px 12px var(--p-primary-color-transparent);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Адаптив для телефонов */
+@media (max-width: 768px) {
+  .app-layout {
+    margin: 1rem auto;
+    padding: 1rem;
+    border-radius: 16px;
+  }
 }
 </style>
