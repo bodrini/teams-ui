@@ -1,0 +1,34 @@
+{
+    "compilerOptions": {
+      /* 1. Настройки версии JS (чтобы работало import.meta) */
+      "target": "ESNext",
+      "module": "ESNext",
+      "moduleResolution": "bundler", 
+      "lib": ["ESNext", "DOM"],
+  
+      /* 2. Строгость (чтобы TS реально помогал искать баги) */
+      "strict": true,
+      "noImplicitAny": false, /* Можно поставить true, если хочешь писать типы везде */
+      
+      /* 3. Настройки для Vue и Vite */
+      "jsx": "preserve",
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "esModuleInterop": true,
+      
+      /* 👇 ГЛАВНОЕ: Это учит TS понимать переменные Vite (.env) */
+      "types": ["vite/client"],
+  
+      /* 4. Настройка путей (чтобы писать @/components вместо ../../components) */
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["src/*"]
+      },
+      
+      /* Не создавать .js файлы при проверке (сборку делает Vite) */
+      "noEmit": true,
+      "skipLibCheck": true
+    },
+    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+    "exclude": ["node_modules"]
+  }
