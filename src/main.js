@@ -1,13 +1,24 @@
-import './assets/main.css'
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
+import './assets/main.css';
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import { createPinia } from 'pinia';
+import PrimeVue from 'primevue/config';
+import Aura from '@primeuix/themes/aura';
 
-// 1. Сначала создаем экземпляр приложения и кладем в переменную 'app'
-const app = createApp(App)
+const app = createApp(App);
 
-// 2. Подключаем роутер к этому экземпляру
-app.use(router)
+app.use(createPinia());
+app.use(router);
 
-// 3. И только потом монтируем (рисуем) приложение на странице
-app.mount('#app')
+// 3. Подключаем PrimeVue с темой
+app.use(PrimeVue, {
+    theme: {
+        preset: Aura,
+        options: {
+            darkModeSelector: 'system',
+        }
+    }
+});
+
+app.mount('#app');

@@ -1,106 +1,141 @@
 <script setup lang="ts">
-import type { NhlResult } from '../types/nhlResults';
+import { computed } from 'vue';
+import type { NhlResult } from '@/types/nhlResults';
 
-defineProps<{
+// Импорт UI компонентов
+import Card from 'primevue/card';
+import Tag from 'primevue/tag';
+import Divider from 'primevue/divider';
+import Skeleton from 'primevue/skeleton';
+
+// 1. Объявляем props и сохраняем в переменную props
+const props = defineProps<{
   stats: NhlResult | null;
 }>();
+
+// 2. Теперь props доступны внутри computed
+const formattedDate = computed(() => {
+  if (!props.stats?.game_date) return '';
+  
+  return new Date(props.stats.game_date).toLocaleDateString('ru-RU', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
+});
 </script>
 
 <template>
-  <div v-if="stats" class="mini-widget">
-    
-    <div class="widget-header">
-      Дата матча: {{ stats.game_date }}
-    </div>
+  <Card v-if="stats" class="score-card">
+    <template #title>
+      <div class="header-content">
+        <span>NHL Result</span>
+        <span class="date-text">{{ formattedDate }}</span>
+      </div>
+    </template>
 
-    <table class="score-table">
-      <tr :class="{ 'winner-row': stats.goals_Islanders > stats.goals_Enemy }">
-        <td class="team-name">Islanders</td>
-        <td class="team-score">{{ stats.goals_Islanders }}</td>
-      </tr>
+    <template #content>
+      <div class="scoreboard">
+        <div class="team-block">
+          <span class="team-name">Islanders</span>
+          <span class="score-number" :class="{ 'winner-text': stats.goals_Islanders > stats.goals_Enemy }">
+            {{ stats.goals_Islanders }}
+          </span>
+        </div>
 
-      <tr :class="{ 'winner-row': stats.goals_Enemy > stats.goals_Islanders }">
-        <td class="team-name">Opponent</td>
-        <td class="team-score">{{ stats.goals_Enemy }}</td>
-      </tr>
-    </table>
+        <div class="vs-divider">VS</div>
 
-    <div 
-      class="status-bar" 
-      :class="stats.are_we_happy ? 'bg-green' : 'bg-red'"
-    >
-      {{ stats.are_we_happy ? 'РУА ВЕРИМ' : 'РУА АУТ' }}
-    </div>
+        <div class="team-block">
+          <span class="team-name">Opponent</span>
+          <span class="score-number" :class="{ 'winner-text': stats.goals_Enemy > stats.goals_Islanders }">
+            {{ stats.goals_Enemy }}
+          </span>
+        </div>
+      </div>
 
-  </div>
+      <Divider />
 
-  <div v-else class="loading">
-    Загрузка...
-  </div>
+      <div class="status-wrapper">
+        <Tag 
+          :severity="stats.are_we_happy ? 'success' : 'danger'" 
+          :value="stats.are_we_happy ? 'РУА ВЕРИМ' : 'РУА АУТ'" 
+          class="large-tag"
+          rounded
+        />
+      </div>
+    </template>
+  </Card>
+
+  <Card v-else class="score-card">
+    <template #content>
+      <Skeleton width="100%" height="400px" />
+    </template>
+  </Card>
 </template>
 
 <style scoped>
-.mini-widget {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  overflow: hidden; /* Чтобы углы не вылезали */
-  max-width: 300px; /* Узкая табличка */
-  margin: 0 auto;
-  font-family: sans-serif;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.widget-header {
-  background: #f4f4f4;
-  padding: 8px;
-  font-size: 0.85rem;
-  color: #666;
-  border-bottom: 1px solid #ddd;
-}
-
-.score-table {
+.score-card {
   width: 100%;
-  border-collapse: collapse;
+  box-sizing: border-box;
+  
+  min-width: 300px; 
 }
 
-.score-table td {
-  padding: 12px 15px;
-  border-bottom: 1px solid #eee;
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #888;
+  text-transform: uppercase;
+}
+
+.scoreboard {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  padding: 0 20px; 
+  margin: 30px 0;
+}
+
+.team-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
 }
 
 .team-name {
-  text-align: left;
-  font-weight: 500;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 5px;
 }
 
-.team-score {
-  text-align: right;
+.score-number {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #ccc;
+  transition: color 0.3s;
+}
+
+.winner-text {
+  color: #2c3e50;
+}
+
+.vs-divider {
   font-weight: bold;
-  font-size: 1.2rem;
+  color: #e0e0e0;
+  margin: 0 10px;
 }
 
-/* Подсветка победителя жирным шрифтом */
-.winner-row {
-  background-color: #fafafa;
-}
-.winner-row .team-score {
-  color: #000;
+.status-wrapper {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
 }
 
-/* Полоска статуса внизу */
-.status-bar {
-  padding: 8px;
-  color: white;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 0.9rem;
-}
-
-.bg-green { background-color: #2ecc71; }
-.bg-red   { background-color: #e74c3c; }
-
-.loading {
-  color: #999;
-  padding: 20px;
+.large-tag {
+  font-size: 1rem;
+  padding: 8px 24px;
 }
 </style>
