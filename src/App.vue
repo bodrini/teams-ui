@@ -1,18 +1,28 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router';
+import { RouterLink, RouterView, useRoute } from 'vue-router';
+import { computed } from 'vue';
 import AppHeader from '@/components/AppHeader.vue';
+
+const route = useRoute();
+const isWelcomePage = computed(() => route.path === '/');
+
 </script>
 
 <template>
-  <div class="app-layout">
-    <AppHeader />
+  <div :class="['app-layout', { 'welcome-mode': isWelcomePage }]">
+    
+    <AppHeader v-if="!isWelcomePage" />
 
-    <nav>
-      <RouterLink to="/">Матч</RouterLink>
+    <nav v-if="!isWelcomePage">
+      <RouterLink to="/matches">Матчи</RouterLink>
       <RouterLink to="/about">Инфо</RouterLink>
     </nav>
 
-    <RouterView />
+    <RouterView v-slot="{ Component }">
+      <transition name="fade" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </RouterView>
   </div>
 </template>
 
@@ -20,34 +30,30 @@ import AppHeader from '@/components/AppHeader.vue';
 .app-layout {
   font-family: var(--p-font-family), sans-serif;
   text-align: center;
-  
-  /* 1. ШИРИНА И ЦЕНТРОВКА */
-  max-width: 800px; /* Наш золотой стандарт */
+  max-width: 800px;
   width: 95%;
-  margin: 4rem auto; /* 4rem сверху/снизу, auto центрирует по горизонтали */
+  margin: 4rem auto;
   padding: 2rem;
-
-  /* 2. ЭФФЕКТ СТЕКЛА (Glassmorphism) */
-  /* Делаем фон белым, но прозрачным на 85% */
   background: rgba(255, 255, 255, 0.85); 
-  
-  /* Размываем то, что находится ПОД карточкой */
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px); /* Для поддержки Safari */
-
-  /* 3. ГРАНИЦЫ И ТЕНИ */
+  -webkit-backdrop-filter: blur(12px);
   border-radius: 24px;
-  /* Светлая тонкая граница создает эффект кромки стекла */
   border: 1px solid rgba(255, 255, 255, 0.4);
-  
-  /* Глубокая, но мягкая тень, чтобы карточка "оторвалась" от льда */
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-  
-  /* Плавное появление */
-  animation: fadeIn 0.8s ease-out;
+  transition: all 0.5s ease; /* Плавный переход при смене фонов */
 }
 
-/* 4. НАВИГАЦИЯ ВНУТРИ КАРТОЧКИ */
+/* СПЕЦИАЛЬНЫЙ РЕЖИМ ДЛЯ WELCOME:
+  Убираем "стекло" и тени, чтобы WelcomeView выглядел как чистый лендинг
+*/
+.welcome-mode {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
+  box-shadow: none;
+}
+
 nav {
   margin-bottom: 2rem;
   display: flex;
@@ -58,25 +64,29 @@ nav {
 nav a {
   text-decoration: none;
   font-weight: 700;
-  color: #1e293b; /* Темный текст для контраста */
+  color: #1e293b;
   padding: 8px 16px;
   border-radius: 12px;
   transition: all 0.3s ease;
 }
 
-/* Красивая подсветка активной ссылки */
 nav a.router-link-active {
   background: var(--p-primary-color);
   color: white;
   box-shadow: 0 4px 12px var(--p-primary-color-transparent);
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+/* АНИМАЦИЯ ПЕРЕХОДА (Fade) */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
 }
 
-/* Адаптив для телефонов */
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
 @media (max-width: 768px) {
   .app-layout {
     margin: 1rem auto;
