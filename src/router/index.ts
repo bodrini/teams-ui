@@ -1,14 +1,21 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import AboutView from '../views/AboutView.vue';
+import WelcomeView from '@/views/WelcomeView.vue';
 
 const router = createRouter({
-  // createWebHistory делает красивые URL (без решетки #)
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      
       path: '/',
       name: 'home',
+      component: WelcomeView
+    },
+    {
+      
+      path: '/matches',
+      name: 'details',
       component: HomeView
     },
     {
