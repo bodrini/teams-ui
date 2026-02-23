@@ -1,0 +1,31 @@
+{
+    "projectType": "Vue 3 (Vite)",
+    "role": "Senior Vue 3 Engineer",
+    "linterCommand": "npx tsc --noEmit",
+    "contextFiles": [
+      "src/api",
+      "src/components",
+      "src/composables",
+      "src/router",
+      "src/types",
+      "src/views",
+      "src/App.vue",
+      "src/main.js"
+    ],
+    "techStack": [
+      "Vue 3 (Composition API)",
+      "TypeScript",
+      "Vite",
+      "Vue Router",
+      "Axios (apiClient)",
+      "Tailwind CSS"
+    ],
+    "rules": [
+      "Используй только <script setup lang='ts'> для .vue файлов",
+      "При работе с API используй существующий src/api/apiClient.ts",
+      "Бизнес-логику выноси в composables (src/composables)",
+      "Типы данных определяй в src/types",
+      "Новые страницы добавляй в src/views и регистрируй в src/router/index.ts",
+      "Соблюдай именование компонентов в PascalCase (напр. AppHeader.vue)"
+    ]
+  }
