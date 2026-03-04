@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import api from '@/api /apiClient';
+import api from '@/api/apiClient';
 import type { NhlResult } from '../types/nhlResults';
 
 export function useNhlStats() {
@@ -12,7 +12,7 @@ export function useNhlStats() {
     error.value = '';
     
     try {
-      const response = await api.get(`/api/teams/nhl-stats-sync`);
+      const response = await api.get(`http://localhost:3000/api/teams/nhl-stats-sync`);
 
       if (response.data && response.data.data) {
         stats.value = response.data.data;
