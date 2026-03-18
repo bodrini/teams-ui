@@ -29,6 +29,7 @@ This UI consumes the **Teams Service** backend via a modular route-based structu
     * `/matches` : **HomeView** — Real-time NHL matches dashboard.
     * `/about` : **AboutView** — Regional info and project details.
     * `/quota`
+    * `/clone`
 * **Data Flow:** Unidirectional data flow from Router views to child components.
 
 ## 🚀 Quick Start
